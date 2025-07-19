@@ -92,13 +92,21 @@ vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier. `:help wincmd`
-vim.keymap.set("n", "<C-v>", "<C-w><C-v>", { desc = "Split vertical window" })
-vim.keymap.set("n", "<C-s>", "<C-w><C-s>", { desc = "Split horizontal window" })
+vim.keymap.set("n", "<leader>v", "<C-w><C-v>", { desc = "Split vertical window" })
+vim.keymap.set("n", "<leader>s", "<C-w><C-s>", { desc = "Split horizontal window" })
 
-vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
-vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
-vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
-vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+vim.keymap.set("n", "<leader>h", "<C-w><C-h>", { desc = "Move focus to the left window" })
+vim.keymap.set("n", "<leader>l", "<C-w><C-l>", { desc = "Move focus to the right window" })
+vim.keymap.set("n", "<leader>j", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+vim.keymap.set("n", "<leader>k", "<C-w><C-k>", { desc = "Move focus to the upper window" })
+
+-- vim.keymap.set("n", "<C-v>", "<C-w><C-v>", { desc = "Split vertical window" })
+-- vim.keymap.set("n", "<C-s>", "<C-w><C-s>", { desc = "Split horizontal window" })
+
+-- vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
+-- vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
+-- vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
+-- vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
 
 -- NOTE: Some terminals have coliding keymaps or are not able to send distinct keycodes
 -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -638,6 +646,14 @@ require("lazy").setup({
 				python = { "black" },
 				-- You can use 'stop_after_first' to run the first available formatter from the list
 				javascript = { "prettierd", "prettier", stop_after_first = true },
+				typescript = { "prettierd", "prettier", stop_after_first = true },
+				javascriptreact = { "prettierd", "prettier", stop_after_first = true },
+				typescriptreact = { "prettierd", "prettier", stop_after_first = true },
+
+				css = { "prettierd", "prettier", stop_after_first = true },
+				html = { "prettierd", "prettier", stop_after_first = true },
+				json = { "prettierd", "prettier", stop_after_first = true },
+				json5 = { "prettierd", "prettier", stop_after_first = true },
 			},
 		},
 	},
@@ -755,12 +771,11 @@ require("lazy").setup({
 			}
 		end,
 	},
-
-	{ -- You can easily change to a different colorscheme.
-		-- Change the name of the colorscheme plugin below, and then
-		-- change the command in the config to whatever the name of that colorscheme is.
-		--
-		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	-- You can easily change to a different colorscheme.
+	-- Change the name of the colorscheme plugin below, and then
+	-- change the command in the config to whatever the name of that colorscheme is.
+	-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
+	{
 		"folke/tokyonight.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		config = function()
@@ -774,7 +789,7 @@ require("lazy").setup({
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme "tokyonight-storm"
+			vim.cmd.colorscheme "tokyonight-night"
 		end,
 	},
 
@@ -793,7 +808,6 @@ require("lazy").setup({
 			require("mini.ai").setup { n_lines = 500 }
 
 			-- Add/delete/replace surroundings (brackets, quotes, etc.)
-			--
 			-- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
 			-- - sd'   - [S]urround [D]elete [']quotes
 			-- - sr)'  - [S]urround [R]eplace [)] [']
@@ -866,12 +880,32 @@ require("lazy").setup({
 	},
 	{ "nvim-treesitter/nvim-treesitter-context" },
 	{ "tpope/vim-fugitive" },
+	{
+		"nvim-ts-autotag",
+		opts = {},
+		-- config = function()
+		-- 	require("nvim-ts-autotag").setup {
+		-- 		-- opts = {
+		-- 		-- 	-- Defaults
+		-- 		-- 	enable_close = true, -- Auto close tags
+		-- 		-- 	enable_rename = true, -- Auto rename pairs of tags
+		-- 		-- 	enable_close_on_slash = false, -- Auto close on trailing </
+		-- 		-- },
+		-- 		-- Also override individual filetype configs, these take priority.
+		-- 		-- Empty by default, useful if one of the "opts" global settings
+		-- 		-- doesn't work well in a specific filetype
+		-- 		-- per_filetype = {
+		-- 		-- 	["html"] = {
+		-- 		-- 		enable_close = false,
+		-- 		-- 	},
+		-- 		-- },
+		-- 	}
+		-- end,
+	},
 
 	require "kickstart.plugins.indent_line",
-	-- require 'kickstart.plugins.lint',
-	-- require 'kickstart.plugins.autopairs',
-	-- require 'kickstart.plugins.neo-tree',
-	-- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
+	-- require "kickstart.plugins.lint",
+	require "kickstart.plugins.autopairs",
 
 	-- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
 	--    This is the easiest way to modularize your config.
